@@ -1,0 +1,6 @@
+cert.pem
+key.pem
+config/
+node_modules/
+*.log
+.env
