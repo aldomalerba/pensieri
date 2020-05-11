@@ -24,13 +24,12 @@ function getAllPensieriAsync(callback){
 function postPensiero(pensiero, callback){
 
   let body = {};
-  body.pensiero = pensiero.text,
-  body.backgroundcolor = pensiero.backgroundcolor || '#008080';
-  body.textcolor = pensiero.textcolor || '#FFFFFF';
-  body.igUsername = pensiero.igUsername || '';
+  body.frase = pensiero.text,
+  body.backgroundColor = pensiero.backgroundcolor || '#008080';
+  body.textColor = pensiero.textcolor || '#FFFFFF';
 
   var http = new XMLHttpRequest();
-  http.open('POST', endpoint + "/pensieri", true);
+  http.open('POST', endpoint + "/pensieri", false);
   http.setRequestHeader('Content-type','application/json; charset=utf-8');
   http.onreadystatechange = function() {
     if (http.readyState === 4 && http.status === 200 && http.responseText) {

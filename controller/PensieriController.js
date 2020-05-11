@@ -1,51 +1,43 @@
 const dbQuery = require('../database/dbQuery');
-
+const Pensiero= require('../database/models').Pensiero;
 const errorMessage = { status: 'error'};
 const successMessage = { status: 'success'};
 
-const getAllPensieri = async (request, response) => {
+const getAllPensieri = async (req, res) => {
+  if (!req.user) return res.status(403).render('error/403');
 
-  const getAllPensieriQuery = 'SELECT * FROM Pensieri ORDER BY id DESC';
-  try {
-    const { rows } = await dbQuery.query(getAllPensieriQuery, );
-    const dbResponse = rows;
-    if (dbResponse[0] === undefined) {
-      errorMessage.error = 'No records found in Pensieri';
-      return response.status(404).send(errorMessage);
-    }
-    successMessage.data = dbResponse;
-    return response.status(200).send(successMessage);
-  } catch (error) {
-    errorMessage.error = 'An error Occured';
-    return response.status(500).send(errorMessage);
+  Pensiero.findAll({
+    where: {
+      enabled: true
+    },
+    order: [
+      ['createdAt','DESC'],
+    ],    
   }
+  ).then(pensieri => {
+    if (pensieri[0] === undefined) {
+      errorMessage.error = 'No records found in Pensieri';
+      return res.status(404).send(errorMessage);
+    }
+    successMessage.data = pensieri;
+    return res.status(200).send(successMessage);
+  }).catch(function (err) {
+    errorMessage.error = 'An error Occured';
+    return res.status(500).send(errorMessage);
+  });
+
 }
 
-const addPensiero = async (request, response) => {
-
-  const {
-    pensiero, backgroundcolor, igUsername, textcolor
-  } = request.body;
-
-  const addPensieroQuery = 
-  'INSERT INTO Pensieri (pensiero, backgroundcolor, igUsername, textcolor, enabled, insertdate ) VALUES ($1, $2, $3, $4, true, now()) returning *';
-
-  const values = [
-    pensiero,
-    backgroundcolor,
-    igUsername,
-    textcolor
-  ];
-
+const addPensiero = async (req, res) => {
   try {
-    const { rows } = await dbQuery.query(addPensieroQuery, values);
-    const dbResponse = rows[0];
-    successMessage.data = dbResponse;
-    return response.status(200).send(successMessage);
+    if (!req.user) return res.status(403).render('error/403');
+    req.body.enabled = true;
+    const pensiero = await Pensiero.create(req.body);
+    return res.status(201).json({ pensiero });
   } catch (error) {
-    errorMessage.error = 'An error Occured';
-    return response.status(500).send(errorMessage);
+    return res.status(500).json({error: error.message})
   }
+
 }
 
 module.exports = {

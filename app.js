@@ -5,12 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
 var passport = require('passport');
-var GoogleStrategy  = require('passport-google-oauth');
-var configAuth = require('./config/auth');
+var authSrategy = require('./authentication/strategy');
 var configSession = require('./config/session');
-
-var GoogleStrategy = GoogleStrategy.OAuth2Strategy;
-
 var indexRouter = require('./routes/index');
 var pensieriRoute = require('./routes/pensieri');
 var loginRouter = require('./routes/login');
@@ -36,27 +32,11 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+passport.serializeUser((user, done) => { done(null, user) });
+passport.deserializeUser((user, done) => { done(null, user) });
 
-
-passport.serializeUser((user, done) => {
-  console.log(user);
-  done(null, user)
-});
-passport.deserializeUser((user, done) => {
-  console.log(user);
-  done(null, user)
-});
-
-passport.use(new GoogleStrategy({
-  clientID: configAuth.googleOAuth2.clientID,
-  clientSecret: configAuth.googleOAuth2.clientSecret,
-  callbackURL: "/auth/google/callback",
-}, (accessToken, refreshToken, profile, done) => {
-    let user = {};
-    console.log(profile);
-    user.googleId = profile.id;
-  done(null, user);
-}));
+passport.use(authSrategy.Google);
+passport.use(authSrategy.Facebook);
 
 app.use('/', indexRouter);
 app.use('/api/pensieri', pensieriRoute);
