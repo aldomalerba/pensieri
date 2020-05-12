@@ -1,6 +1,7 @@
 cert.pem
 key.pem
-config/
+config/auth.js
+config/session.js
 node_modules/
 *.log
 .env
