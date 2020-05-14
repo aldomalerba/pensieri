@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
 
     Pensiero.belongsTo(models.User, {
       foreignKey: 'userId',
-      as: 'author',
       onDelete: 'CASCADE', 
     })
   };

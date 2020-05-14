@@ -9,8 +9,8 @@ var passport = require('passport');
 var authSrategy = require('./authentication/strategy');
 var configSession = require('./config/session');
 var indexRouter = require('./routes/index');
-var pensieriRoute = require('./routes/pensieri');
-var loginRouter = require('./routes/login');
+var pensieriRoute = require('./routes/api/pensieriRouter');
+var loginRouter = require('./routes/authRouter');
 
 var app = express();
 

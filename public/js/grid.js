@@ -8,11 +8,6 @@ var GridPensieri = (function () {
     let grid = document.getElementById("grid");
     pensieri.forEach((pensiero) => {
 
-      /*var html = `
-       <div class="square" style="background-color: ${pensiero.backgroundColor}; color: ${pensiero.textColor}">
-         <div class="content"><div class="content"><div class="text-inner">${pensiero.frase}<div></div></div>
-       </div>`;*/
-
       var elSquare = document.createElement("div");
       var elContent = document.createElement("div");
       var elText = document.createElement("div");
@@ -22,7 +17,7 @@ var GridPensieri = (function () {
       elText.classList.add("text-inner");
 
       elSquare.style.backgroundColor = pensiero.backgroundColor;
-      elSquare.style.textColor = pensiero.textColor;
+      elSquare.style.color = pensiero.textColor;
       elText.textContent = pensiero.frase;
 
       elContent.appendChild(elText);
