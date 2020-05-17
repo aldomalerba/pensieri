@@ -14,9 +14,11 @@
     </nav>
     
     <div class="container">
-      <div class="row">
-        <% include ./include/loginForm %>
-      </div>
+      <% if (typeof info === 'undefined') { %>
+        <div class="row">
+          <% include ./include/loginForm %>
+        </div>
+      <% } %>
     </div>
 
     

@@ -11,6 +11,7 @@ var configSession = require('./config/session');
 var indexRouter = require('./routes/index');
 var pensieriRoute = require('./routes/api/pensieriRouter');
 var loginRouter = require('./routes/authRouter');
+var profileRouter = require('./routes/profileRouter');
 
 var app = express();
 
@@ -42,6 +43,7 @@ passport.use(authSrategy.Facebook);
 app.use('/', indexRouter);
 app.use('/api/pensieri', pensieriRoute);
 app.use('/auth', loginRouter);
+app.use('/profile', profileRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

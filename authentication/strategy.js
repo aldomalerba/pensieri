@@ -8,16 +8,36 @@ const googleStrategy = new GoogleStrategy({
     clientSecret: configAuth.googleOAuth2.clientSecret,
     callbackURL: "/auth/google/callback",
   }, (accessToken, refreshToken, profile, done) => {
-
-    User.findOne({where:{ email : profile._json.email }})
+    
+    User.findOne({where:{
+      email : profile._json.email
+    }})
     .then((user) => { 
-        if(!user){
-          done(null, false, { error : { staus: 404, message: "Email not exists" }});
-        } 
-        let userSession = {
-          id : user.id
-        };
-        done(null, userSession);
+        if(user){
+          done(null, user);
+        }
+        else{
+          
+          User.createUsernameByDisplayName(profile.displayName)
+          .then(function(username){
+            let data = {
+              username: username,
+              email : profile._json.email,
+              displayName : profile.displayName,
+              provider : profile.provider,
+              picture: profile._json.picture
+            };
+
+            User.create(data)
+            .then(function(createdUser){
+              if(!createdUser)
+                done(null, false);
+              else
+                done(null, createdUser);
+            });
+          });
+          
+        }
     }).catch((err) => {
       done(err);
     });
@@ -31,15 +51,36 @@ const facebookStrategy = new FacebookStrategy({
   profileFields: ['id', 'displayName', 'photos', 'email']
 },
 function(accessToken, refreshToken, profile, done) {
-  User.findOne({where:{ email : profile._json.email }})
+  User.findOne({where:{
+    email : profile._json.email
+  }})
   .then((user) => { 
-      if(!user){
-        done(null, false, { error : { staus: 404, message: "Email not exists" }});
-      } 
-      let userSession = {
-        id : user.id
-      };
-      done(null, userSession);
+      if(user){
+        done(null, user);
+      }
+      else{
+        
+        User.createUsernameByDisplayName(profile.displayName)
+        .then(function(username){
+          let data = {
+            username: username,
+            email : profile._json.email,
+            displayName : profile.displayName,
+            provider : profile.provider,
+            picture: profile.photos ? profile.photos[0].value : '/images/faces/unknown-user-pic.jpg'
+          };
+
+          User.create(data)
+          .then(function(createdUser){
+            if(!createdUser)
+              done(null, false);
+            else
+              done(null, createdUser);
+          });
+        });
+        
+        
+      }
   }).catch((err) => {
     done(err);
   });

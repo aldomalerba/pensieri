@@ -11,6 +11,7 @@ body { padding-top: 70px; }
 }
 
 .square{
+  cursor: pointer;
   position: relative;
   box-sizing: border-box;
 }
