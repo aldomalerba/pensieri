@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
     enabled: DataTypes.BOOLEAN,
     userId: DataTypes.INTEGER
   }, {
+    name: {
+      singular: "Pensiero",
+      plural: "Pensieri",
+    },
     tableName: 'Pensieri'
    });
   Pensiero.associate = function(models) {

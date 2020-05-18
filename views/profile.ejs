@@ -22,8 +22,20 @@
     </div>
     </nav>
     <div class="container mt-2 pl-md-5 pr-md-5 pl-lg-5 pr-lg-5">
-        Hello <%= name %>
+        <div class="row text-center mb-5">
+            <div class="col">
+                <img width="200" src="<%= picture %>" class="rounded-circle" alt="...">
+                <h5 class="mt-2"><%= name %></h5>
+            </div>
+        </div>
        <div id="grid" class="grid">
+           <% for( var pensiero of pensieri ) { %>
+            <div class="square" style="background-color: <%= pensiero.backgroundColor %>;">
+                <div class="content">
+                 <div class="text-inner" style="color: <%= pensiero.textColor %>;"><%= pensiero.frase %></div>
+                </div>
+              </div>
+           <% } %>
       </div> 
     </div>
 

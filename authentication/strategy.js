@@ -48,7 +48,7 @@ const facebookStrategy = new FacebookStrategy({
   clientID: configAuth.facebook.clientID,
   clientSecret: configAuth.facebook.clientSecret,
   callbackURL: "/auth/facebook/callback",
-  profileFields: ['id', 'displayName', 'photos', 'email']
+  profileFields: ['id', 'displayName', 'picture.type(large)', 'email']
 },
 function(accessToken, refreshToken, profile, done) {
   User.findOne({where:{

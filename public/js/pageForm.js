@@ -9,7 +9,7 @@ var form = (function () {
         let text = document.getElementById("txtPensiero").value;
         let backgroundcolor = pickrBackground.getColor().toHEXA().toString();
         let textcolor = pickrText.getColor().toHEXA().toString();
-        debugger;
+        
         let body = {
             text,
             backgroundcolor,
