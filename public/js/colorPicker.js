@@ -1,10 +1,9 @@
 
-let elPreview = document.getElementById('preview');
+let elPreview = document.querySelector('square-post');
 const elPickerBackground = document.querySelector('.color-picker-background');
 const elPickerText = document.querySelector('.color-picker-text');
-
-const defaultColorText = '#000000';
-const defaultColorBackground = '#EDEDED';
+const defaultColorText = '#008980';
+const defaultColorBackground = '#FFFFFF';
 
 const pickrBackground = Pickr.create({
   el: elPickerBackground,
@@ -43,11 +42,11 @@ const pickrText = Pickr.create({
 
 pickrBackground.on('init', instance => {
     elPickerBackground.style.background = defaultColorBackground;
-    elPreview.style.backgroundColor = defaultColorBackground;
+    elPreview.backgroundColor = defaultColorBackground;
 }).on('change',  (color, instance) => {
     const hexaColor = color.toHEXA().toString();
     elPickerBackground.style.background = hexaColor;
-    elPreview.style.backgroundColor = hexaColor;
+    elPreview.backgroundColor = hexaColor;
 }).on('changestop',  (instance) => {
     instance.applyColor(false);
 }).on('save', (color, instance) => {
@@ -67,11 +66,11 @@ pickrBackground.on('init', instance => {
 
 pickrText.on('init', instance => {
     elPickerText.style.background = defaultColorText;
-    elPreview.style.color = defaultColorText;
+    elPreview.textColor = defaultColorText;
 }).on('change',  (color, instance) => {
     const hexaColor = color.toHEXA().toString();
     elPickerText.style.background = hexaColor;
-    elPreview.style.color = hexaColor;
+    elPreview.textColor = hexaColor;
 }).on('changestop',  (instance) => {
     instance.applyColor(false);
 }).on('save', (color, instance) => {

@@ -8,10 +8,16 @@ const getProfileByUsername = async (req, res) => {
       where:{
           username: req.params.username
       },
-      include    : [{ model: Pensiero}]
-
+      include    : [{ model: Pensiero}],
+      order: [
+        [ { model: Pensiero }, 'createdAt', 'DESC' ]
+    ]
   }).then(function(user){
-    return res.render('profile', {name: user.displayName});
+    return res.render('profile', {
+      name: user.displayName,
+      picture: user.picture,
+      pensieri: user.Pensieri
+    });
   });
 }
 

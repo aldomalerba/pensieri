@@ -10,7 +10,7 @@ const getAllPensieri = async (req, res) => {
     where: {
       enabled: true
     },
-    include    : [{ model: User, attributes: ['displayName'], required: true}],
+    include    : [{ model: User, attributes: ['displayName', 'username', 'picture'], required: true}],
     order: [
       ['createdAt','DESC'],
     ],    

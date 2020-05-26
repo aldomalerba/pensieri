@@ -16,7 +16,19 @@
     <div class="container">
       <% if (typeof info === 'undefined') { %>
         <div class="row">
-          <% include ./include/loginForm %>
+          <div class="col-sm-9 col-md-6 col-lg-4 mx-auto">
+                <div class="form">
+                  <h3 class="text-center">Logo</h3>
+                  <hr class="mb-4 mt-1">
+                  <a class="btn btn-lg btn-block btn-login btn-login-facebook text-left" href="/auth/facebook">
+                    <img width="25" src="/images/facebookLogo.png">
+                    <span class="ml-3 mr-2 align-middle">Accedi con Facebook</span>
+                  </a>
+                  <a class="btn btn-lg btn-block btn-login btn-login-google text-left" href="/auth/google">
+                    <img width="25" src="/images/googleLogo.svg">
+                    <span class="ml-3 mr-2 align-middle">Accedi con Google</span>
+                  </a>
+                </div>
         </div>
       <% } %>
     </div>

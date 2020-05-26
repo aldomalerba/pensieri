@@ -1,7 +1,8 @@
-body { padding-top: 70px; }
+body { padding-top: 70px; padding-bottom: 70px; }
 
 .navbar{
   border-bottom: 1px 	rgb(192,192,192, 50%) solid;
+  z-index: 1;
 }
 
 .navbar-nav.navbar-center {
@@ -10,55 +11,10 @@ body { padding-top: 70px; }
   transform: translatex(-50%);
 }
 
-.square{
-  cursor: pointer;
-  position: relative;
-  box-sizing: border-box;
-}
-
-.square::before{
-  content: '';
-  display: block;
-  padding-top: 100%;
-}
-
-.squareHeader,
-.squareFooter {
-    position: relative;
-    background-color: rgba(255, 255, 255, 0.3);
-    height: 15%;
-}
-
-.squarePicture{
-  height: 100%;
-  max-width: 100%;
-  display: inline-block;
-}
-
-.squareBody {
-    position: relative;
-    height: 70%;
-}
-
-.content{
-  position: absolute;
-  top: 0; left:0;
-  height: 100%;
-  width: 100%;
-}
-
-.text-inner {
+.text-inner-footer {
   position: relative;
   top: 50%;
   transform: translateY(-50%);
-  overflow-wrap: break-word;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  text-align: left;
-  -webkit-line-clamp: 6;
-  -webkit-box-orient: vertical;
-  white-space: pre-line;
 }
 
 .grid {
@@ -68,7 +24,6 @@ body { padding-top: 70px; }
   row-gap: 1rem;
   column-gap: 1rem;
   font-family: 'Rubik', sans-serif;
-  font-size: 1.2em;
 }
 
 .grid::before {
@@ -99,4 +54,13 @@ body { padding-top: 70px; }
 .btn-login-facebook{
   background-color: #4267B2;
   color: white;
+}
+
+.btnWritePost{
+  background-color: rgba(255,255,255, 0.5);
+}
+
+footer.footer{
+  background-color: white;
+  z-index: 1;
 }
