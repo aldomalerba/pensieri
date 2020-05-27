@@ -14,7 +14,7 @@
           </div>
       </div>
       <div class="squareFooter">
-        <button class="like">Like<span class="likeIcon"></span></button>
+      <button class="button"><span class="icon"></span>Button</button>
       </div>
   </div>      
 </div>`;
@@ -46,13 +46,14 @@
         "username",
         "showheader",
         "showfooter",
-        "username-href"
+        "username-href",
+        "icon-src"
       ];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
       switch (name) {
-        case "avatar":;
+        case "avatar": ;
           updateAvatar(this);
         case "username":
           updateUserName(this);
@@ -65,6 +66,9 @@
         case "username-href":
           updateUserNameHref(this);
           break;
+        case "icon-src":
+          updateStyle(this);
+          break;
         case "backgroundcolor" || "textcolor":
           updateStyle(this);
           break;
@@ -76,7 +80,7 @@
 
     get showHeader() {
       let value = this.getAttribute("showheader");
-      if(value == null)
+      if (value == null)
         return true;
       else if (value == 'false')
         return false;
@@ -84,13 +88,13 @@
     }
 
     set showHeader(newValue) {
-      if(newValue == true) return this.setAttribute("showheader", "true")
+      if (newValue == true) return this.setAttribute("showheader", "true")
       else return this.setAttribute("showheader", "false");
     }
 
     get showFooter() {
       let value = this.getAttribute("showfooter");
-      if(value == null)
+      if (value == null)
         return true;
       else if (value == 'false')
         return false;
@@ -98,7 +102,7 @@
     }
 
     set showFooter(newValue) {
-      if(newValue == true) return this.setAttribute("showfooter", "true")
+      if (newValue == true) return this.setAttribute("showfooter", "true")
       else return this.setAttribute("showfooter", "false");
     }
 
@@ -119,11 +123,19 @@
     }
 
     get userName() {
-      return this.getAttribute("userName");
+      return this.getAttribute("username");
     }
 
     set userName(newValue) {
       this.setAttribute("username", newValue);
+    }
+
+    get iconSrc() {
+      return this.getAttribute("icon-src");
+    }
+
+    set iconSrc(newValue) {
+      this.setAttribute("icon-src", newValue);
     }
 
     get backgroundColor() {
@@ -160,7 +172,7 @@
 
     pressLike() {
       const tabs = this.shadowRoot.querySelector('.like');
-      tabs.dispatchEvent(new Event('press-like', {bubbles: true, composed: true}));
+      tabs.dispatchEvent(new Event('press-like', { bubbles: true, composed: true }));
     }
 
   }
@@ -175,6 +187,7 @@
     shadow.querySelector(".squareUsername").textContent = elem.userName;
   }
 
+
   function updateUserNameHref(elem) {
     const shadow = elem.shadowRoot;
     shadow.querySelector(".squareUsername").href = elem.userNameHref;
@@ -187,10 +200,11 @@
 
   function updateStyle(elem) {
     let width = elem.getAttribute("width") || "100%";
-    let backgroundColor = elem.getAttribute("backgroundcolor") || ""; 
+    let backgroundColor = elem.getAttribute("backgroundcolor") || "";
     let textColor = elem.getAttribute("textcolor") || "";
-    let showheader =  elem.showHeader == true ? "flex" : "none";
-    let showfooter =  elem.showFooter == true ? "flex" : "none";
+    let showheader = elem.showHeader == true ? "flex" : "none";
+    let showfooter = elem.showFooter == true ? "flex" : "none";
+    let icon = elem.getAttribute("icon-src");
     const shadow = elem.shadowRoot;
     shadow.querySelector("style").textContent = `
     .square{
@@ -311,29 +325,30 @@
       text-decoration: underline;
     }
 
-    .like{
-      appearance: none;
-      position: absolute;
-      right: 0;
-
-      background: none;
-	    color: inherit;
-	    border: none;
-	    padding: 0;
-	    font: inherit;
-	    cursor: pointer;
-	  outline: inherit;
-    }
-
-    .likeIcon{
-      background: url(knowledge.png) no-repeat top left;
-      background-size: contain;
-      cursor: pointer;
+    .button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
       display: inline-block;
-      margin-left: 2.5%;
-      height: 80%;
-      max-width: 100%;
-    }
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+  }
+  .button .icon {
+      background: url(https://image.flaticon.com/icons/svg/281/281769.svg) no-repeat;
+      float: left;
+      width: 20px;
+      height: 20px;
+      margin-right: 10px
+  }  
+  .button .span {
+      float: left;
+      width: 20px;
+      height: 20px;
+  } 
     `;
   }
 
