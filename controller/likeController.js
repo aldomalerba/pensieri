@@ -8,14 +8,13 @@ const addLike = async (req, res) => {
         userId: req.user.id
     };
     
-    Like.findOne({
+    /*Like.findOne({
       where: data
     }).then(function(){
-
-      const like = await Like.create(data);
-      return res.status(201).json({ like });
-      
-    });
+     
+    });*/
+    const like = await Like.create(data);
+    return res.status(201).json({ like });
   } catch (error) {
     return res.status(500).json({error: error.message})
   }
