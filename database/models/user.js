@@ -19,9 +19,13 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function(models) {
     
     User.hasMany(models.Pensiero, {
-      foreignKey: 'userId',
-      onDelete: 'CASCADE',
+      foreignKey: 'userId'
     });
+
+    User.hasMany(models.Like, {
+      foreignKey: 'userId'
+    });
+    
   };
 
   User.createUsernameByDisplayName = function(displayName){

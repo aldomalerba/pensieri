@@ -1,5 +1,5 @@
 const dbQuery = require('../database/dbQuery');
-const { Pensiero, User }= require('../database/models');
+const { Pensiero, User, Like, sequelize }= require('../database/models');
 const errorMessage = { status: 'error'};
 const successMessage = { status: 'success'};
 
@@ -10,9 +10,13 @@ const getAllPensieri = async (req, res) => {
     where: {
       enabled: true
     },
-    include    : [{ model: User, attributes: ['displayName', 'username', 'picture'], required: true}],
+    include    : [
+      { model: User, attributes: ['displayName', 'username', 'picture'], required: true},
+      { model: Like }
+    ],
     order: [
       ['createdAt','DESC'],
+      [ { model: Like }, 'createdAt', 'DESC' ]
     ],    
   }
   ).then(pensieri => {

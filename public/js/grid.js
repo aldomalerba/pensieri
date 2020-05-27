@@ -20,6 +20,13 @@ var GridPensieri = (function () {
       square.setAttribute("showheader", false);
       square.setAttribute("showfooter", false);
 
+      square.addEventListener('press-like', e => {
+        debugger;
+        RestSerive.addLike( { pensieroId: pensiero.id} ,function(response){
+          alert('post');
+        });
+      });
+      
       var squareBody = square.shadowRoot.querySelector('.squareBody');
       squareBody.addEventListener('click', () => {
         var isHeaderVisible = square.showHeader;

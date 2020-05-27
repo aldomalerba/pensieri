@@ -9,7 +9,8 @@ var passport = require('passport');
 var authSrategy = require('./authentication/strategy');
 var configSession = require('./config/session');
 var indexRouter = require('./routes/index');
-var pensieriRoute = require('./routes/api/pensieriRouter');
+var pensieriRouter = require('./routes/api/pensieriRouter');
+var likeRouter = require('./routes/api/likeRouter');
 var loginRouter = require('./routes/authRouter');
 var profileRouter = require('./routes/profileRouter');
 
@@ -41,7 +42,8 @@ passport.use(authSrategy.Google);
 passport.use(authSrategy.Facebook);
 
 app.use('/', indexRouter);
-app.use('/api/pensieri', pensieriRoute);
+app.use('/api/pensieri', pensieriRouter);
+app.use('/api/like', likeRouter);
 app.use('/auth', loginRouter);
 app.use('/profile', profileRouter);
 

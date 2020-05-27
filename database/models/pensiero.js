@@ -17,9 +17,13 @@ module.exports = (sequelize, DataTypes) => {
   Pensiero.associate = function(models) {
 
     Pensiero.belongsTo(models.User, {
-      foreignKey: 'userId',
-      onDelete: 'CASCADE', 
-    })
+      foreignKey: 'userId'
+    });
+
+    Pensiero.hasMany(models.Like, {
+      foreignKey: 'pensieroId'
+    });
+
   };
   return Pensiero;
 };
