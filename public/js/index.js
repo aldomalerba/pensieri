@@ -1,6 +1,3 @@
-window.onload = function(){
-    RestSerive.getAllPensieriAsync(function(result){
-        GridPensieri.fillGridPensieri(result.data);
-    });
-};
-
+document.addEventListener('DOMContentLoaded', function() {
+    GridPensieri.init();
+ });

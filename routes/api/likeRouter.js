@@ -7,6 +7,6 @@ const {
 const router = express.Router();
 
 router.post('/', addLike);
-router.delete('/', removeLike);
+router.delete('/:pensieroId', removeLike);
 
 module.exports = router;

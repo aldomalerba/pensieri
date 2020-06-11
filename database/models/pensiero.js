@@ -24,6 +24,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'pensieroId'
     });
 
+    Pensiero.hasOne(models.Like, {
+      as: 'userLike',
+      foreignKey: 'pensieroId'
+    });
+
   };
   return Pensiero;
 };

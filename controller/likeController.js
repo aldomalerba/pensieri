@@ -7,12 +7,6 @@ const addLike = async (req, res) => {
         pensieroId: req.body.pensieroId,
         userId: req.user.id
     };
-    
-    /*Like.findOne({
-      where: data
-    }).then(function(){
-     
-    });*/
     const like = await Like.create(data);
     return res.status(201).json({ like });
   } catch (error) {
@@ -23,12 +17,12 @@ const addLike = async (req, res) => {
 const removeLike = async (req, res) => {
   try {
     if (!req.user) return res.status(403).render('error/403');
-
+    
     const like = 
     await Like.destroy({
         where: {
-          pensieroId: req.body.pensieroId,
-          userId: Request.user.id
+          pensieroId: req.params.pensieroId,
+          userId: req.user.id
         }
     });
     return res.status(201).json({ like });

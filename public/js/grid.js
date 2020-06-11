@@ -1,51 +1,89 @@
 var GridPensieri = (function () {
 
-  return {
-    fillGridPensieri: fillGridPensieri,
+  var DOM = {
+    grid
   };
 
-  function fillGridPensieri(pensieri) {
+   /* =================== private methods ================= */
+
+  // cache DOM elements
+  function cacheDom() {
+    DOM.grid = document.getElementById("grid");
+  }
+  // bind events
+  function bindEvents() {
+    DOM.grid.addEventListener("onload", fillGridPensieri());
+  }
+  
+  function fillGridPensieri() {
     
-    let grid = document.getElementById("grid");
-    pensieri.forEach((pensiero) => {
+    restSerive.getAllPensieriAsync(function(result){
+      result.data.forEach((pensiero) => {
 
-      var square = document.createElement('square-post');
+        
+        let square = document.createElement('square-post');
 
-      square.setAttribute("backgroundcolor", pensiero.backgroundColor);
-      square.setAttribute("textcolor", pensiero.textColor);
-      square.setAttribute("text",pensiero.frase);
-      square.setAttribute("username", pensiero.User.username);
-      square.setAttribute("username-href", "/profile/"+pensiero.User.username);
-      square.setAttribute("avatar", pensiero.User.picture);
-      square.setAttribute("showheader", false);
-      square.setAttribute("showfooter", false);
-
-      square.addEventListener('press-like', e => {
-        debugger;
-        RestSerive.addLike( { pensieroId: pensiero.id} ,function(response){
-          alert('post');
+        let userLiked = !!pensiero.userLike;
+        square.backgroundColor = pensiero.backgroundColor;
+        square.textColor = pensiero.textColor;
+        square.text = pensiero.frase;
+        square.userName = pensiero.User.username;
+        square.usernameHref = "/profile/"+pensiero.User.username;
+        square.avatar = pensiero.User.picture;
+        square.likeText = pensiero.Likes.length + " likes";
+        square.showHeader = userLiked;
+        square.showFooter = userLiked;
+        if(userLiked){
+          square.likeSrc = "images/idea_like.png";
+        }
+        else  
+          square.likeSrc = "images/idea.png";
+  
+  
+        square.addEventListener('press-like', e => {
+          if(square.likeSrc == "images/idea.png"){
+            restSerive.addLike( { pensieroId: pensiero.id} ,function(response){
+              square.likeSrc = "images/idea_like.png";
+            });
+          }
+          else{
+            restSerive.deleteLike( { pensieroId: pensiero.id} ,function(response){
+              square.likeSrc = "images/idea.png";
+            });
+          }
         });
-      });
-      
-      var squareBody = square.shadowRoot.querySelector('.squareBody');
-      squareBody.addEventListener('click', () => {
-        var isHeaderVisible = square.showHeader;
-        if(!isHeaderVisible){
-          square.showHeader = true;
-          square.showFooter = true;         
-        }
-        else{
-          squareModal.setContent('<h4>'+pensiero.User.username+'</h4><p>'+pensiero.frase+'</p>');
-          squareModal.open();
-        }
-      });
-      grid.appendChild(square);
+        
+        var squareBody = square.shadowRoot.querySelector('.squareBody');
+        squareBody.addEventListener('click', () => {
+          var isHeaderVisible = square.showHeader;
+          if(!isHeaderVisible){
+            square.showHeader = true;
+            square.showFooter = true;         
+          }
+          else{
+            squareModal.setContent('<h4>'+pensiero.User.username+'</h4><p>'+pensiero.frase+'</p>');
+            squareModal.open();
+          }
+        });
+  
+        DOM.grid.appendChild(square);
+     });
+    
 
     });
   }
 
-  function test(){
-    alert("test");
+  /* =================== public methods ================== */
+  
+  // main init method
+  function init() {
+    cacheDom();
+    bindEvents();
   }
+
+  /* =============== export public methods =============== */
+  return {
+    init: init
+  };
 
 })(GridPensieri || {});

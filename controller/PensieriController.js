@@ -12,10 +12,18 @@ const getAllPensieri = async (req, res) => {
     },
     include    : [
       { model: User, attributes: ['displayName', 'username', 'picture'], required: true},
-      { model: Like }
+      { model: Like },
+      {
+        model: Like,
+        required: false,
+        as: 'userLike',
+        where:{
+          userId: req.user.id
+        }
+      }
     ],
     order: [
-      ['createdAt','DESC'],
+      ['createdAt','DESC'] ,
       [ { model: Like }, 'createdAt', 'DESC' ]
     ],    
   }

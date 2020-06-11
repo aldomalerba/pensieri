@@ -2,7 +2,7 @@
   const template = document.createElement("template");
   template.innerHTML = `
 
-  <div class="square unselectable">
+<div class="square unselectable">
   <div class="wrapper">
       <div class="squareHeader">
           <img class="squarePicture" alt="...">
@@ -14,7 +14,10 @@
           </div>
       </div>
       <div class="squareFooter">
-      <button class="button"><span class="icon"></span>Button</button>
+        <div class="likeContainer">
+          <span class="likeText"></span>
+          <img alt="like" class="likeIcon">
+        </div>
       </div>
   </div>      
 </div>`;
@@ -32,7 +35,7 @@
 
     connectedCallback() {
       console.info("connected");
-      this.shadowRoot.querySelector(".like").onclick = () => { this.pressLike() };
+      this.shadowRoot.querySelector(".likeIcon").onclick = () => { this.pressLike() };
       updateStyle(this);
     }
 
@@ -47,7 +50,8 @@
         "showheader",
         "showfooter",
         "username-href",
-        "icon-src"
+        "like-src",
+        "like-text"
       ];
     }
 
@@ -64,11 +68,13 @@
           updateOnPress(this);
           break;
         case "username-href":
-          updateUserNameHref(this);
+          updateUsernameHref(this);
           break;
-        case "icon-src":
-          updateStyle(this);
+        case "like-src":
+          updateLikeSrc(this);
           break;
+        case "like-text":
+          updateLikeText(this);
         case "backgroundcolor" || "textcolor":
           updateStyle(this);
           break;
@@ -130,12 +136,12 @@
       this.setAttribute("username", newValue);
     }
 
-    get iconSrc() {
-      return this.getAttribute("icon-src");
+    get likeSrc() {
+      return this.getAttribute("like-src");
     }
 
-    set iconSrc(newValue) {
-      this.setAttribute("icon-src", newValue);
+    set likeSrc(newValue) {
+      this.setAttribute("like-src", newValue);
     }
 
     get backgroundColor() {
@@ -162,16 +168,25 @@
       this.setAttribute("width", newValue);
     }
 
-    get userNameHref() {
+    get usernameHref() {
       return this.getAttribute("username-href");
     }
 
-    set userNameHref(newValue) {
+    set usernameHref(newValue) {
       this.setAttribute("username-href", newValue);
     }
 
+    get likeText() {
+      return this.getAttribute("like-text");
+    }
+
+    set likeText(newValue) {
+      this.setAttribute("like-text", newValue);
+    }
+
+
     pressLike() {
-      const tabs = this.shadowRoot.querySelector('.like');
+      const tabs = this.shadowRoot.querySelector('.likeIcon');
       tabs.dispatchEvent(new Event('press-like', { bubbles: true, composed: true }));
     }
 
@@ -188,14 +203,24 @@
   }
 
 
-  function updateUserNameHref(elem) {
+  function updateUsernameHref(elem) {
     const shadow = elem.shadowRoot;
-    shadow.querySelector(".squareUsername").href = elem.userNameHref;
+    shadow.querySelector(".squareUsername").href = elem.usernameHref;
+  }
+
+  function updateLikeSrc(elem) {
+    const shadow = elem.shadowRoot;
+    shadow.querySelector(".likeIcon").src = elem.likeSrc;
   }
 
   function updateAvatar(elem) {
     const shadow = elem.shadowRoot;
     shadow.querySelector(".squarePicture").src = elem.avatar;
+  }
+
+  function updateLikeText(elem) {
+    const shadow = elem.shadowRoot;
+    shadow.querySelector(".likeText").textContent = elem.likeText;   
   }
 
   function updateStyle(elem) {
@@ -204,7 +229,6 @@
     let textColor = elem.getAttribute("textcolor") || "";
     let showheader = elem.showHeader == true ? "flex" : "none";
     let showfooter = elem.showFooter == true ? "flex" : "none";
-    let icon = elem.getAttribute("icon-src");
     const shadow = elem.shadowRoot;
     shadow.querySelector("style").textContent = `
     .square{
@@ -240,7 +264,8 @@
   
     .squareHeader,
     .squareFooter,
-    .squareBody{
+    .squareBody,
+    .likeContainer{
       position: absolute;
       width: 100%;
       display: -ms-flexbox;
@@ -255,7 +280,7 @@
     .squareHeader,
     .squareFooter{  
       height: 15%;
-      background-color: rgba(255, 255, 255, 1);;
+      background-color: rgba(255, 255, 255, 0.9);;
     }
   
     .squareHeader{
@@ -325,30 +350,24 @@
       text-decoration: underline;
     }
 
-    .button {
-      background-color: #4CAF50;
-      border: none;
-      color: white;
-      padding: 15px 32px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      margin: 4px 2px;
+    .likeContainer {
+      right:0;
+      width: 50%;
+      height: 100%;
+      justify-content: flex-end;
+    }
+
+    .likeText{
+      margin-right: 10px;
+    }
+
+
+    .likeIcon {
+      height: 60%;
+      max-width: 100%;
+      margin-right: 2.5%;
       cursor: pointer;
-  }
-  .button .icon {
-      background: url(https://image.flaticon.com/icons/svg/281/281769.svg) no-repeat;
-      float: left;
-      width: 20px;
-      height: 20px;
-      margin-right: 10px
-  }  
-  .button .span {
-      float: left;
-      width: 20px;
-      height: 20px;
-  } 
+    }  
     `;
   }
 

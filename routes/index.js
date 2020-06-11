@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
   if(!req.user)
     res.render('login',{ title: 'Express'});
   else
-    res.render('index',{ title: 'Express'});
+    res.render('home',{ title: 'Express'});
 
 });
 

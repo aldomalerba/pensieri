@@ -16,7 +16,7 @@ var form = (function () {
             textcolor
         };
 
-        RestSerive.addPensiero( body ,function(response){});
+        restSerive.addPensiero( body ,function(response){});
     };
 
     var validateForm = function() {

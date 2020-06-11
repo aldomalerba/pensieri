@@ -13,13 +13,19 @@
 <body>
   
    <square-post avatar="avatar.png" width="40%" username="User Name" showheader="true"
-    text="This is a simple sample text." backgroundcolor="#008080" textcolor="#ffffff" icon-src="idea.png">
+    text="This is a simple sample text." backgroundcolor="#008080" textcolor="#ffffff" like-src="idea.png"
+    like-text="50 likes">
   </square-post>
 </body>
 <script>
   const square = document.querySelector('square-post');
   square.addEventListener('press-like', e => {
-    alert('Like');
+    if(square.likeSrc == "idea.png"){
+      square.likeSrc = "idea_like.png";
+    }
+    else{
+      square.likeSrc = "idea.png";
+    }
   });
 </script>
 </html>

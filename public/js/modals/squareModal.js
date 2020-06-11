@@ -5,10 +5,8 @@ var squareModal = new tingle.modal({
     closeLabel: "Chiudi",
     cssClass: [],
     onOpen: function() {
-        console.log('modal open');
     },
     onClose: function() {
-        console.log('modal closed');
     },
     beforeClose: function() {
         // here's goes some logic
@@ -17,22 +15,4 @@ var squareModal = new tingle.modal({
         return false; // nothing happens
     }
 });
-
-/*// add a button
-squareModal.addFooterBtn('Button label', 'tingle-btn tingle-btn--primary', function() {
-    // here goes some logic
-    squareModal.close();
-  });
-  
-  // add another button
-  squareModal.addFooterBtn('Dangerous action !', 'tingle-btn tingle-btn--danger', function() {
-    // here goes some logic
-    squareModal.close();
-  });
-  
-  // open modal
-  squareModal.open();
-  
-  // close modal
-  squareModal.close();*/
             
